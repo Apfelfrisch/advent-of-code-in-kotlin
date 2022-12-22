@@ -1,6 +1,5 @@
 import Hand.*
 import java.io.File
-import kotlin.system.exitProcess
 
 enum class Hand(val score: Int) {
     Rock(1),
@@ -52,11 +51,11 @@ private fun Char.toResult(): Result {
     }
 }
 
-private fun myHand(opponentHand: Hand, myResult: Result): Hand {
+private fun Hand.getMissingHand(myResult: Result): Hand {
     return when(myResult) {
-        Result.Loose -> opponentHand.winningHand()
-        Result.Draw -> opponentHand
-        Result.Win -> opponentHand.loosingHand()
+        Result.Loose -> this.winningHand()
+        Result.Draw -> this
+        Result.Win -> this.loosingHand()
     }
 }
 
@@ -85,10 +84,10 @@ private fun partOne(input: List<String>): Int {
 private fun partTwo(input: List<String>): Int {
 
     return input.sumOf { game -> Int
-        val hand = game[0].toHand();
+        val opponentHand = game[0].toHand();
         val result = game[2].toResult();
 
-        result.score + myHand(hand, result).score
+        result.score + opponentHand.getMissingHand(result).score
     }
 }
 
