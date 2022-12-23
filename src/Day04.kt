@@ -1,6 +1,6 @@
 import java.io.File
 
-val input = File("inputs/Day04.txt").readLines()
+private val input = File("inputs/Day04.txt").readLines()
 
 fun main() {
     val part1 = input.mapToPairs().count { isFullyOverlapped(it) }
